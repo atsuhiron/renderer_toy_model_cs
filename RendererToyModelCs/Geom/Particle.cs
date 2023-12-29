@@ -1,4 +1,5 @@
 ﻿using MathNet.Numerics.LinearAlgebra;
+using RendererToyModelCs.Chromatic;
 
 namespace RendererToyModelCs.Geom
 {
@@ -20,6 +21,11 @@ namespace RendererToyModelCs.Geom
         }
 
         public float GetIntensity()
+        {
+            throw new NotImplementedException();
+        }
+
+        public CLight GetLight()
         {
             throw new NotImplementedException();
         }

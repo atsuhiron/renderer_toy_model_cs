@@ -1,4 +1,5 @@
 ﻿using MathNet.Numerics.LinearAlgebra;
+using RendererToyModelCs.Chromatic;
 
 namespace RendererToyModelCs.Geom
 {
@@ -11,7 +12,7 @@ namespace RendererToyModelCs.Geom
         string GetId();
         string GetParentId();
         int GetGeneration();
-        // CLight GetLight();
+        CLight GetLight();
         string getlstCollidedSurfaceId();
 
         //static IParticle CreateInverseTraceParticle();
