@@ -5,17 +5,14 @@ namespace RendererToyModelCs.Geom
 {
     public interface IParticle
     {
-        Vector<float> GetPos();
-        Vector<float> GetVec();
-        float GetIntensity();
-        Guid GetUuid();
-        string GetId();
-        string GetParentId();
-        int GetGeneration();
-        CLight GetLight();
-        string getlstCollidedSurfaceId();
-
-        //static IParticle CreateInverseTraceParticle();
-        //static IParticle CreateTerminatedParticle();
+        Vector<float> Pos { get; init; }
+        Vector<float> Vec { get; init; }
+        float Intensity { get; init; }
+        string Id { get; init; }
+        bool IsTerminated { get; init; }
+        string ParentId { get; init; }
+        int Generation { get; init; }
+        CLight Light { get; init; }
+        string LastCollidedSurfaceId { get; init; }
     }
 }
