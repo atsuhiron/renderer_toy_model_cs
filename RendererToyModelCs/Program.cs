@@ -1,5 +1,4 @@
-﻿using System;
-using MathNet.Numerics.LinearAlgebra;
+﻿using MathNet.Numerics.LinearAlgebra;
 using RendererToyModelCs.Algorithm;
 
 namespace RendererToyModelCs
@@ -28,6 +27,9 @@ namespace RendererToyModelCs
             Console.WriteLine(LinearAlgebra.RotateVector(vec3, norm1, MathF.PI / 4));
             Console.WriteLine(LinearAlgebra.RotateVector(vec3, norm2, MathF.PI / 4));
             Console.WriteLine(LinearAlgebra.RotateVector(vec3, norm3, MathF.PI / 4));
+
+            var mat = vec1.OuterProduct(vec2);
+            Console.WriteLine(mat);
         }
     }
 }

@@ -4,6 +4,14 @@ namespace RendererToyModelCs.Algorithm
 {
     public static class LinearAlgebra
     {
+        public static Vector<float> Cross(Vector<float> left, Vector<float> right)
+        {
+            var x = left[1] * right[2] - left[2] * right[1];
+            var y = -left[0] * right[2] + left[2] * right[0];
+            var z = left[0] * right[1] - left[1] * right[0];
+            return Vector<float>.Build.Dense([x, y, z]);
+        }
+
         public static CollisionParameter CalcCollisionParam()
         {
             return null;
