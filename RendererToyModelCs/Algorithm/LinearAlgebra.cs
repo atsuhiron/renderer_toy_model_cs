@@ -1,4 +1,5 @@
 ﻿using MathNet.Numerics.LinearAlgebra;
+using RendererToyModelCs.Geom;
 
 namespace RendererToyModelCs.Algorithm
 {
@@ -12,9 +13,24 @@ namespace RendererToyModelCs.Algorithm
             return Vector<float>.Build.Dense([x, y, z]);
         }
 
-        public static CollisionParameter CalcCollisionParam()
+        public static CollisionParameter CalcCollisionParam(in ISurface suf, in IParticle part)
         {
-            return null;
+            var arr = new float[]
+            {
+                suf.Basis.Item1[0], suf.Basis.Item1[1], suf.Basis.Item1[2],
+                suf.Basis.Item2[0], suf.Basis.Item2[1], suf.Basis.Item2[2],
+                part.Vec[0], part.Vec[1], part.Vec[2]
+            };
+            var matA = Matrix<float>.Build.Dense(3, 3, arr);
+
+            if (matA.Rank() < 3)
+            {
+                return new CollisionParameter(-1f, -1f, -1f);
+            }
+
+            var vecB = part.Pos - suf.Origin;
+            var root = matA.Solve(vecB);
+            return new CollisionParameter(root[0], root[1], root[2]);
         }
 
         public static bool DoCollide(CollisionParameter cParam, Tuple<float, float> basisNorm)
@@ -59,6 +75,13 @@ namespace RendererToyModelCs.Algorithm
                 ]);
 
             return r * vector;
+        }
+
+        public static Vector<float> CalcMainOutVec(ISurface suf, IParticle part)
+        {
+            var norm = suf.NormVec.Normalize(2f);
+            var inVec = part.Vec.Multiply(-1f);
+            return RotateVector(inVec, norm, MathF.PI);
         }
     }
 }

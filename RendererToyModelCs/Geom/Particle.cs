@@ -12,17 +12,17 @@ namespace RendererToyModelCs.Geom
         public bool IsTerminated { get; init; }
         public string ParentId { get; init; }
         public int Generation { get; init; }
-        public CLight Light { get; init; }
+        public CLight? Light { get; init; }
         public string LastCollidedSurfaceId { get; init; }
 
         public Particle(Vector<float> pos, Vector<float> vec,
-            string parentId, float intensity, CLight light, string lastCollidedSurfaceId,
-            bool isTerminated, string uuid)
+            string parentId, float intensity, CLight? light, string lastCollidedSurfaceId,
+            bool isTerminated, string? uuid)
         {
             Pos = pos;
             Vec = vec;
             Intensity = intensity;
-            Id = uuid;
+            Id = uuid ?? Guid.NewGuid().ToString();
             IsTerminated = isTerminated;
             ParentId = parentId;
             Light = light;

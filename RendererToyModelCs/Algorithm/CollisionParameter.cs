@@ -2,8 +2,15 @@
 {
     public record CollisionParameter
     {
-        public float CoefA;
-        public float CoefB;
-        public float Dist;
+        public float CoefA { get; init; }
+        public float CoefB { get; init; }
+        public float Dist { get; init; }
+
+        public CollisionParameter(float coefA, float coefB, float dist)
+        {
+            CoefA = coefA;
+            CoefB = coefB;
+            Dist = dist;
+        }
     }
 }

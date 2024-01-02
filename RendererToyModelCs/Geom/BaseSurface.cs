@@ -5,14 +5,14 @@ namespace RendererToyModelCs.Geom
 {
     public abstract class BaseSurface : ISurface
     {
-        public abstract string Name { get; init; }
+        public string Name { get; init; }
         public abstract SurfaceType SufType { get; }
-        public abstract Tuple<Vector<float>, Vector<float>> Basis { get; init; }
-        public abstract Tuple<float, float> BasisNorm { get; init; }
-        public abstract Vector<float> Origin { get; init; }
-        public abstract Vector<float> NormVec { get; init; }
-        public abstract string Id { get; init; }
-        public abstract List<Vector<float>> Points { get; init; }
+        public Tuple<Vector<float>, Vector<float>> Basis { get; init; }
+        public Tuple<float, float> BasisNorm { get; init; }
+        public Vector<float> Origin { get; init; }
+        public Vector<float> NormVec { get; init; }
+        public string Id { get; init; }
+        public List<Vector<float>> Points { get; init; }
 
         public BaseSurface(List<Vector<float>> points, string name)
         {
@@ -25,12 +25,17 @@ namespace RendererToyModelCs.Geom
             Points = points;
             Id = Guid.NewGuid().ToString();
 
+            Origin = points[0];
             Basis = CalcBasis();
             BasisNorm = CalcBasisNorm();
             NormVec = CalcNormVec();
         }
 
-        public abstract Vector<float> CalcRelativeCPoint(in CollisionParameter cParam);
+        public Vector<float> CalcRelativeCPoint(in CollisionParameter cParam)
+        {
+            return Basis.Item1.Multiply(cParam.CoefA) + Basis.Item2 * cParam.CoefB;
+        }
+
         public abstract List<IParticle> GetCollisionParticle(in IParticle inPaticle, in CollisionParameter cParam, int num);
 
         private Tuple<Vector<float>, Vector<float>> CalcBasis()

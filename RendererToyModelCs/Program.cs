@@ -30,6 +30,11 @@ namespace RendererToyModelCs
 
             var mat = vec1.OuterProduct(vec2);
             Console.WriteLine(mat);
+
+            Matrix<float> mat2 = Matrix<float>.Build.Dense(3, 3, [0.7f, 1f, 2f, 3f, 4f, 5f, 6f, 7f, 8f]);
+            var ret = mat2.Solve(vec2);
+            Console.WriteLine(mat2);
+            Console.WriteLine(ret);
         }
     }
 }
