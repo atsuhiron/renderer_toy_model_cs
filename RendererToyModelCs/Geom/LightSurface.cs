@@ -4,7 +4,7 @@ using RendererToyModelCs.Chromatic;
 
 namespace RendererToyModelCs.Geom
 {
-    public class LightSurface(List<Vector<float>> points, string name, CLight light) : BaseSurface(points, name)
+    public class LightSurface(List<Vector<float>> points, string? name, CLight light) : BaseSurface(points, name)
     {
         public override SurfaceType SufType => SurfaceType.Light;
 

@@ -3,7 +3,7 @@ using RendererToyModelCs.Algorithm;
 
 namespace RendererToyModelCs.Geom
 {
-    public class SmoothSurface(List<Vector<float>> points, string name) : BaseSurface(points, name)
+    public class SmoothSurface(List<Vector<float>> points, string? name) : BaseSurface(points, name)
     {
         public override SurfaceType SufType => SurfaceType.Smooth;
 

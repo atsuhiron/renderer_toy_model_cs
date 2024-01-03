@@ -14,7 +14,7 @@ namespace RendererToyModelCs.Geom
         public string Id { get; init; }
         public List<Vector<float>> Points { get; init; }
 
-        public BaseSurface(List<Vector<float>> points, string name)
+        public BaseSurface(List<Vector<float>> points, string? name)
         {
             Name = name ?? string.Empty;
 
