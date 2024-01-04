@@ -1,5 +1,8 @@
 ﻿using MathNet.Numerics.LinearAlgebra;
+using MathNet.Numerics.Random;
 using RendererToyModelCs.Algorithm;
+using RendererToyModelCs.Geom;
+using System;
 
 namespace RendererToyModelCs
 {
@@ -35,6 +38,12 @@ namespace RendererToyModelCs
             var ret = mat2.Solve(vec2);
             Console.WriteLine(mat2);
             Console.WriteLine(ret);
+
+            var ra = RoughSurface.GenerateRandomTheta(8);
+            foreach (var val in ra)
+            {
+                Console.WriteLine(val);
+            }
         }
     }
 }
