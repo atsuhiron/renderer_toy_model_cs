@@ -32,7 +32,7 @@ namespace RendererToyModelCs.Geom
                     {
                         var zenithRotateAxialVec = LinearAlgebra.RotateVector(cPointToOriginVec, normalizedNorm, phi[index]);
                         var outVec = LinearAlgebra.RotateVector(normalizedNorm, zenithRotateAxialVec, theta[index]);
-                        return (IParticle)new Particle(cPoint, outVec, parentId, childItst, null, Id, false, null);
+                        return (IParticle)new Particle(cPoint, outVec, parentId, childItst, null, Id);
                     }
                 )
                 .ToList();
