@@ -36,7 +36,7 @@ namespace RendererToyModelCs.Geom
             return Basis.Item1.Multiply(cParam.CoefA) + Basis.Item2 * cParam.CoefB;
         }
 
-        public abstract List<IParticle> GetCollisionParticle(in IParticle inPaticle, in CollisionParameter cParam, int num);
+        public abstract List<IParticle> GetCollisionParticle(in IParticle inParticle, in CollisionParameter cParam, int num);
 
         private Tuple<Vector<float>, Vector<float>> CalcBasis()
         {

@@ -10,11 +10,11 @@ namespace RendererToyModelCs.Geom
 
         public CLight Light { get; init; } = light;
 
-        public override List<IParticle> GetCollisionParticle(in IParticle inPaticle, in CollisionParameter cParam, int num)
+        public override List<IParticle> GetCollisionParticle(in IParticle inParticle, in CollisionParameter cParam, int num)
         {
             return new List<IParticle>
             {
-                Particle.CreateTerminatedParticle(inPaticle, Light)
+                Particle.CreateTerminatedParticle(inParticle, Light)
             };
         }
     }

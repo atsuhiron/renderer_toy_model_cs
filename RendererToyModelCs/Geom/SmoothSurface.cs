@@ -7,15 +7,15 @@ namespace RendererToyModelCs.Geom
     {
         public override SurfaceType SufType => SurfaceType.Smooth;
 
-        public override List<IParticle> GetCollisionParticle(in IParticle inPaticle, in CollisionParameter cParam, int num)
+        public override List<IParticle> GetCollisionParticle(in IParticle inParticle, in CollisionParameter cParam, int num)
         {
             var cPoint = CalcRelativeCPoint(cParam) + Origin;
-            var outVec = LinearAlgebra.CalcMainOutVec(this, inPaticle);
+            var outVec = LinearAlgebra.CalcMainOutVec(this, inParticle);
 
-            return new List<IParticle>()
-            {
-                new Particle(cPoint, outVec, inPaticle.Id, inPaticle.Intensity, null, Id, false, null)
-            };
+            return
+            [
+                new Particle(cPoint, outVec, inParticle.Id, inParticle.Intensity, null, Id, false, null)
+            ];
         }
     }
 }

@@ -16,6 +16,6 @@ namespace RendererToyModelCs.Geom
 
         Vector<float> CalcRelativeCPoint(in CollisionParameter cParam);
 
-        List<IParticle> GetCollisionParticle(in IParticle inPaticle, in CollisionParameter cParam, int num);
+        List<IParticle> GetCollisionParticle(in IParticle inParticle, in CollisionParameter cParam, int num);
     }
 }
