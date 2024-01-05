@@ -14,7 +14,7 @@ namespace RendererToyModelCs.Geom
 
             return
             [
-                new Particle(cPoint, outVec, inParticle.Id, inParticle.Intensity, null, Id, false, null)
+                new Particle(cPoint, outVec, inParticle.Id, inParticle.Intensity, null, Id)
             ];
         }
     }

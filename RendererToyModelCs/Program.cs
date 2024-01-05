@@ -38,12 +38,6 @@ namespace RendererToyModelCs
             var ret = mat2.Solve(vec2);
             Console.WriteLine(mat2);
             Console.WriteLine(ret);
-
-            var ra = RoughSurface.GenerateRandomTheta(8);
-            foreach (var val in ra)
-            {
-                Console.WriteLine(val);
-            }
         }
     }
 }
