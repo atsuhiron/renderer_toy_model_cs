@@ -15,5 +15,10 @@ namespace RendererToyModelCs.Algorithm
         }
 
         public bool GoThroughWorld() => CollisionParame == null;
+
+        public static CollisionResult CreateDefault()
+        {
+            return new CollisionResult(CollisionParameter.CreateDefault(), null);
+        }
     }
 }

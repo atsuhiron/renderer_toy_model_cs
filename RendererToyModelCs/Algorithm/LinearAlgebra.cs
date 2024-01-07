@@ -83,5 +83,26 @@ namespace RendererToyModelCs.Algorithm
             var inVec = part.Vec.Multiply(-1f);
             return RotateVector(inVec, norm, MathF.PI);
         }
+
+        public static CollisionResult FindCollisionSurface(in IParticle part, in List<ISurface> surfaces)
+        {
+            var collisions = new List<CollisionResult>();
+            
+            foreach (var suf in surfaces)
+            {
+                if (part.LastCollidedSurfaceId == suf.Id) 
+                    continue;
+
+                var cParam = CalcCollisionParam(suf, part);
+                if (DoCollide(cParam, suf.BasisNorm))
+                    collisions.Add(new CollisionResult(cParam, suf));
+            }
+
+            if (collisions.Count == 0)
+                return CollisionResult.CreateDefault();
+            if (collisions.Count == 1)
+                return collisions[0];
+            return collisions.MinBy(colRes => colRes.CollisionParame.Dist) ?? CollisionResult.CreateDefault();
+        }
     }
 }

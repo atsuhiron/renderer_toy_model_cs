@@ -12,5 +12,10 @@
             CoefB = coefB;
             Dist = dist;
         }
+
+        public static CollisionParameter CreateDefault()
+        {
+            return new CollisionParameter(-1f, -1f, -1f);
+        }
     }
 }
