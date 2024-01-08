@@ -1,4 +1,5 @@
-﻿using RendererToyModelCs.Algorithm;
+﻿using System.Diagnostics;
+using RendererToyModelCs.Algorithm;
 using RendererToyModelCs.Chromatic;
 using RendererToyModelCs.Extension;
 using RendererToyModelCs.Geom;
@@ -11,6 +12,27 @@ namespace RendererToyModelCs
         public World WorldGeom { get; init; } = world;
 
         public RenderingConfig Config { get; init; } = config;
+
+        public List<IParticle> Render()
+        {
+            var timer = new Stopwatch();
+            timer.Start();
+
+            List<List<IParticle>> generations = [WorldGeom.Camera.CreatePixelVec()];
+            var surfaces = WorldGeom.Surfaces;
+            Dictionary<string, ISurface> surfaceMap = surfaces.ToDictionary(suf => suf.Id, suf => suf);
+
+            for (int g = 1; g < Config.MaxGen + 1; g++)
+                generations.Add(TraceParticles(generations[g - 1], surfaces));
+
+            var inverseTracedChild = generations.Last();
+            for (int g = Config.MaxGen; g > 0; g--)
+                inverseTracedChild = InverseTrace(inverseTracedChild, generations[g - 1], surfaceMap);
+            
+            timer.Stop();
+            Console.WriteLine($"Rendering time: {timer.ElapsedMilliseconds / 1000f:#.##} s");
+            return inverseTracedChild;
+        }
 
         private List<IParticle> TraceParticle(in IParticle part, in List<ISurface> surfaces)
         {
