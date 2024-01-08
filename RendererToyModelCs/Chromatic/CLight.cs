@@ -34,5 +34,7 @@ namespace RendererToyModelCs.Chromatic
             var newLight = new CLight(1 - sumVec);
             return (newLight, maskedIntensity);
         }
+
+        public static CLight CreateDark() => new(Vector<float>.Build.Dense([1f, 1f, 1f]));
     }
 }

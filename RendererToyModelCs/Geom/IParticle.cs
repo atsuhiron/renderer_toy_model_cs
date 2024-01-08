@@ -10,7 +10,7 @@ namespace RendererToyModelCs.Geom
         float Intensity { get; init; }
         string Id { get; init; }
         bool IsTerminated { get; init; }
-        string? ParentId { get; init; }
+        string ParentId { get; init; }
         int Generation { get; init; }
         CLight? Light { get; init; }
         string? LastCollidedSurfaceId { get; init; }

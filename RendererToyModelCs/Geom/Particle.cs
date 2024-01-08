@@ -10,13 +10,13 @@ namespace RendererToyModelCs.Geom
         public float Intensity { get; init; }
         public string Id { get; init; }
         public bool IsTerminated { get; init; }
-        public string? ParentId { get; init; }
+        public string ParentId { get; init; }
         public int Generation { get; init; }
         public CLight? Light { get; init; }
         public string? LastCollidedSurfaceId { get; init; }
 
         public Particle(Vector<float> pos, Vector<float> vec,
-            string? parentId=null, float intensity=1f, CLight? light=null, string? lastCollidedSurfaceId=null,
+            string parentId="root", float intensity=1f, CLight? light=null, string? lastCollidedSurfaceId=null,
             bool isTerminated=false, string? uuid=null)
         {
             Pos = pos;
