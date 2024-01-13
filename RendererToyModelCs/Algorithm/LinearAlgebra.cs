@@ -19,7 +19,7 @@ namespace RendererToyModelCs.Algorithm
             {
                 suf.Basis.Item1[0], suf.Basis.Item1[1], suf.Basis.Item1[2],
                 suf.Basis.Item2[0], suf.Basis.Item2[1], suf.Basis.Item2[2],
-                part.Vec[0], part.Vec[1], part.Vec[2]
+                -part.Vec[0], -part.Vec[1], -part.Vec[2]
             };
             var matA = Matrix<float>.Build.Dense(3, 3, arr);
 
