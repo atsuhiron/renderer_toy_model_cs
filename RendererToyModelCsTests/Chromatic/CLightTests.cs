@@ -96,5 +96,33 @@ namespace RendererToyModelCsTests.Chromatic
             var expectedLightElement = Vector<float>.Build.Dense(3, 0.6875f);
             Assert.Equal(expectedLightElement, syntheLight.Elements);
         }
+
+        [Fact]
+        public void AddLightsTest_DifferentLength()
+        {
+            var lights = new List<CLight>()
+            {
+                new(Vector<float>.Build.Dense(3, 0.25f)),
+                new(Vector<float>.Build.Dense(3, 0.5f))
+            };
+            var itst = new List<float>()
+            {
+                0.25f,
+                0.25f,
+                0.25f
+            };
+
+            var excep = Assert.Throws<ArgumentException>(() => CLight.AddLights(lights, itst));
+            Assert.Contains("must have same length", excep.Message);
+        }
+
+        [Fact]
+        public void CreateDarkTest()
+        {
+            var expected = Vector<float>.Build.Dense(3, 1f);
+            var actualLight = CLight.CreateDark();
+
+            Assert.Equal(expected, actualLight.Elements);
+        }
     }
 }
