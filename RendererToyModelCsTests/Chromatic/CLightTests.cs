@@ -22,5 +22,79 @@ namespace RendererToyModelCsTests.Chromatic
             var expectedElement = Vector<float>.Build.DenseOfArray(expectedElemet);
             Assert.Equal(expectedElement, actualElement);
         }
+
+        [Fact]
+        public void AddLightsTest_Empty()
+        {
+            var lights = new List<CLight>();
+            var itst = new List<float>();
+
+            (CLight syntheLight, float syntheInts) = CLight.AddLights(lights, itst);
+            
+            Assert.Equal(0f, syntheInts);
+
+            var expectedLightElement = Vector<float>.Build.Dense(3, 0f);
+            Assert.Equal(expectedLightElement, syntheLight.Elements);
+        }
+
+        [Fact]
+        public void AddLightsTest_Single()
+        {
+            var lights = new List<CLight>() { new(Vector<float>.Build.Dense(3, 0.25f)) };
+            var itst = new List<float>() { 0.5f };
+
+            (CLight syntheLight, float syntheInts) = CLight.AddLights(lights, itst);
+            
+            Assert.Equal(0.5f, syntheInts);
+
+            var expectedLightElement = Vector<float>.Build.Dense(3, 0.25f);
+            Assert.Equal(expectedLightElement, syntheLight.Elements);
+        }
+
+        [Fact]
+        public void AddLightsTest_Double()
+        {
+            var lights = new List<CLight>()
+            {
+                new(Vector<float>.Build.Dense(3, 0.25f)),
+                new(Vector<float>.Build.Dense(3, 0.5f))
+            };
+            var itst = new List<float>()
+            {
+                0.25f,
+                0.125f
+            };
+
+            (CLight syntheLight, float syntheInts) = CLight.AddLights(lights, itst);
+
+            Assert.Equal(0.375f, syntheInts);
+
+            var expectedLightElement = Vector<float>.Build.Dense(3, 0.75f);
+            Assert.Equal(expectedLightElement, syntheLight.Elements);
+        }
+
+        [Fact]
+        public void AddLightsTest_ContainDark()
+        {
+            var lights = new List<CLight>()
+            {
+                new(Vector<float>.Build.Dense(3, 0.25f)),
+                new(Vector<float>.Build.Dense(3, 0.5f)),
+                new(Vector<float>.Build.Dense(3, 1f))  // Dark
+            };
+            var itst = new List<float>()
+            {
+                0.25f,
+                0.25f,
+                0.25f
+            };
+
+            (CLight syntheLight, float syntheInts) = CLight.AddLights(lights, itst);
+
+            Assert.Equal(0.5f, syntheInts);
+
+            var expectedLightElement = Vector<float>.Build.Dense(3, 0.6875f);
+            Assert.Equal(expectedLightElement, syntheLight.Elements);
+        }
     }
 }

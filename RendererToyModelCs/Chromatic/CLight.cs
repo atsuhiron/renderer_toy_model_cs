@@ -17,6 +17,15 @@ namespace RendererToyModelCs.Chromatic
 
         public static (CLight, float) AddLights(in List<CLight> lights, in List<float> intensities)
         {
+            if (lights.Count != intensities.Count)
+            {
+                throw new ArgumentException($"{nameof(lights)} and {nameof(intensities)} must have same length");
+            }
+            if (lights.Count <= 1)
+            {
+                return (lights.FirstOrDefault(new CLight(Vector<float>.Build.Dense(3, 0f))), intensities.FirstOrDefault(0f));
+            }
+
             IEnumerable<CColor> colors = lights.Zip(intensities)
                 .Select((lightInst) => new CColor((1 - lightInst.First.Elements).Multiply(lightInst.Second)));
             IEnumerable<float> darkMask = colors.Select(col => col.IsDark() ? 0f : 1f);
