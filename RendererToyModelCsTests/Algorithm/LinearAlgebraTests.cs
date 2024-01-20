@@ -63,5 +63,21 @@ namespace RendererToyModelCsTests.Algorithm
             var actual = LinearAlgebra.CalcCollisionParam(surface, particle);
             Assert.Equal(expected, actual);
         }
+
+        [Theory]
+        [InlineData(-1.0f, 0.4f, 2.0f, 1f, 1f, false)]
+        [InlineData(1.0f, -0.4f, 2.0f, 1f, 1f, false)]
+        [InlineData(0.6f, 0.5f, -2.0f, 2f, 2f, false)]
+        [InlineData(0.5f, 0.6f, -2.0f, 2f, 2f, false)]
+        [InlineData(0.5f, 0.5f, -2.0f, 2f, 2f, true)]
+        [InlineData(0.1f, 0.1f, -2.0f, 2f, 2f, true)]
+        public void DoCollideTest(float cParamA, float cParamB, float cParamD, float basis1, float basis2, bool expected)
+        {
+            var cParam = new CollisionParameter(cParamA, cParamB, cParamD);
+            var basisNorm = Tuple.Create(basis1, basis2);
+
+            bool actual = LinearAlgebra.DoCollide(cParam, basisNorm);
+            Assert.Equal(expected, actual);
+        }
     }
 }

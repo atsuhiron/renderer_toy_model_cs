@@ -41,7 +41,7 @@ namespace RendererToyModelCs.Algorithm
             }
 
             float a = cParam.CoefA / basisNorm.Item1;
-            float b = cParam.CoefA / basisNorm.Item2;
+            float b = cParam.CoefB / basisNorm.Item2;
             
             if ((a + b) > 0.5)
             {
