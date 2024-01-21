@@ -77,10 +77,15 @@ namespace RendererToyModelCs.Algorithm
             return r * vector;
         }
 
-        public static Vector<float> CalcMainOutVec(ISurface suf, IParticle part)
+        public static Vector<float> CalcMainOutVec(in ISurface suf, in IParticle part)
         {
             var norm = suf.NormVec.Normalize(2f);
             var inVec = part.Vec.Multiply(-1f);
+            if (norm.DotProduct(inVec) > 0)
+            {
+                norm = norm.Multiply(-1f);
+            }
+
             return RotateVector(inVec, norm, MathF.PI);
         }
 

@@ -18,7 +18,7 @@ namespace RendererToyModelCs.Geom
             var normalizedNorm = NormVec.Normalize(2.0);
             if (normalizedNorm.DotProduct(inParticle.Vec) > 0)
             {
-                normalizedNorm.Multiply(-1f);
+                normalizedNorm = normalizedNorm.Multiply(-1f);
             }
             var cPointToOriginVec = relCPoint.Normalize(2.0).Multiply(-1f);
 

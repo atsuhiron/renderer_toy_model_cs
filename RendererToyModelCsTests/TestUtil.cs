@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using MathNet.Numerics.LinearAlgebra;
 
 namespace RendererToyModelCsTests
 {
@@ -15,6 +16,14 @@ namespace RendererToyModelCsTests
             if (ret == null)
                 return default;
             return (T)ret;
+        }
+
+        private static readonly float s_tol = 2e-7f;
+
+        public static bool IsNearlyEqual(Vector<float> vec1, Vector<float> vec2)
+        {
+            var diff = (vec1 - vec2).PointwiseAbs();
+            return diff.ToList().All(x => x < s_tol);
         }
     }
 }

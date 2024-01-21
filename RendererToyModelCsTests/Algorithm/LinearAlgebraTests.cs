@@ -7,15 +7,6 @@ namespace RendererToyModelCsTests.Algorithm
 {
     public class LinearAlgebraTests
     {
-        private static readonly float s_tol = 1e-7f;
-
-        private bool IsNearlyEqual(Vector<float> vec1, Vector<float> vec2)
-        {
-            var diff = (vec1 - vec2).PointwiseAbs();
-            return diff.ToList().All(x => x < s_tol);
-        }
-
-
         public static IEnumerable<object[]> CrossTestData()
         {
             yield return new float[][] { [2f, 0f, 0f], [0f, 1f, 0f], [0f, 0f, 2f] };
@@ -31,7 +22,7 @@ namespace RendererToyModelCsTests.Algorithm
             var expected = Vector<float>.Build.Dense(expectedEle);
             
             var actual = LinearAlgebra.Cross(vec1, vec2);
-            Assert.True(IsNearlyEqual(expected, actual));
+            Assert.True(TestUtil.IsNearlyEqual(expected, actual));
         }
 
         private static readonly float[] s_suf1Point1 = [0f, 0f, 0f];
@@ -95,10 +86,10 @@ namespace RendererToyModelCsTests.Algorithm
             yield return new float[][] { [1f, 0f, 0f], [0f, 1f, 0f], [0f, 0f, -1f] };  // xy
             yield return new float[][] { [1f, 0f, 0f], [0f, 0f, 1f], [0f, 1f, 0f] };   // xz
             yield return new float[][] { [0f, 1f, 0f], [1f, 0f, 0f], [0f, 0f, 1f] };   // yx
-            yield return new float[][] { [0f, 1f, 0f], [0f, 1f, 0f], [0f, 1f, 0f] };  // yy
-            yield return new float[][] { [0f, 1f, 0f], [0f, 0f, 1f], [-1f, 0f, 0f] };   // yz
-            yield return new float[][] { [0f, 0f, 1f], [1f, 0f, 0f], [0f, -1f, 0f] };   // zx
-            yield return new float[][] { [0f, 0f, 1f], [0f, 1f, 0f], [1f, 0f, 0f] };  // zy
+            yield return new float[][] { [0f, 1f, 0f], [0f, 1f, 0f], [0f, 1f, 0f] };   // yy
+            yield return new float[][] { [0f, 1f, 0f], [0f, 0f, 1f], [-1f, 0f, 0f] };  // yz
+            yield return new float[][] { [0f, 0f, 1f], [1f, 0f, 0f], [0f, -1f, 0f] };  // zx
+            yield return new float[][] { [0f, 0f, 1f], [0f, 1f, 0f], [1f, 0f, 0f] };   // zy
             yield return new float[][] { [0f, 0f, 1f], [0f, 0f, 1f], [0f, 0f, 1f] };   // zz
         }
 
@@ -111,7 +102,52 @@ namespace RendererToyModelCsTests.Algorithm
             var expected = Vector<float>.Build.DenseOfArray(expectedEle);
 
             var actual = LinearAlgebra.RotateVector(vec, axis, MathF.PI/2);
-            Assert.True(IsNearlyEqual(expected, actual));
+            Assert.True(TestUtil.IsNearlyEqual(expected, actual));
+        }
+
+        public static IEnumerable<object[]> CalcMainOutVecTestData()
+        {
+            // surface_point1~3, particle_point, particle_vec, expected_vec
+            yield return new float[][]
+            {
+                [0f, 0f, 0f], [1f, 0f, 0f], [0f, 1f, 0f],
+                [0.25f, 0.25f, 1.25f], [0f, 0f, -1f], [0f, 0f, 1f]
+            };
+            yield return new float[][]
+            {
+                [0f, 0f, 0f], [1f, 0f, 0f], [0f, 1f, 0f],
+                [0.25f, 0f, 1f], [0.70710678f, 0f, -0.70710678f], [0.70710678f, 0f, 0.707106781f]
+            };
+            yield return new float[][]
+            {
+                [0f, 0f, 0f], [1f, 0f, 0f], [0f, -10f, -10f],
+                [0.25f, -0.25f, 1.25f], [0f, 0f, -1f], [0f, -1f, 0f]
+            };
+            yield return new float[][]
+            {
+                [0f, 0f, 0f], [0f, -10f, -10f], [1f, 0f, 0f],
+                [0.25f, -0.25f, 1.25f], [0f, 0f, -1f], [0f, -1f, 0f]
+            };
+        }
+
+        [Theory]
+        [MemberData(nameof(CalcMainOutVecTestData))]
+        public void CalcMainOutVecTest(float[] sufpoint1, float[] sufpoint2, float[] sufpoint3, float[] partPoint, float[] partVec, float[] expectedVec)
+        {
+            var sufPoints = new List<Vector<float>>()
+            {
+                Vector<float>.Build.DenseOfArray(sufpoint1),
+                Vector<float>.Build.DenseOfArray(sufpoint2),
+                Vector<float>.Build.DenseOfArray(sufpoint3)
+            };
+            var suf = new SmoothSurface(sufPoints, string.Empty);
+
+            var part = new Particle(Vector<float>.Build.DenseOfArray(partPoint), Vector<float>.Build.DenseOfArray(partVec));
+
+            var expected = Vector<float>.Build.DenseOfArray(expectedVec);
+
+            var actual = LinearAlgebra.CalcMainOutVec(suf, part);
+            Assert.True(TestUtil.IsNearlyEqual(expected, actual));
         }
     }
 }
