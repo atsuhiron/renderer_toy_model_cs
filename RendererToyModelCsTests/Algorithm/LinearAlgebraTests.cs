@@ -149,5 +149,44 @@ namespace RendererToyModelCsTests.Algorithm
             var actual = LinearAlgebra.CalcMainOutVec(suf, part);
             Assert.True(TestUtil.IsNearlyEqual(expected, actual));
         }
+
+        [Fact]
+        public void FindCollisionSurfaceTest_Empty()
+        {
+            var pos = Vector<float>.Build.DenseOfArray([0f, 0f, 1f]);
+            var vec = Vector<float>.Build.DenseOfArray([0f, 0f, -1f]);
+            var particle = new Particle(pos, vec);
+            List<ISurface> surfaces = [];
+
+            CollisionResult ret = LinearAlgebra.FindCollisionSurface(particle, surfaces);
+
+            Assert.Equal(-1f, ret.CollisionParame.CoefA);
+            Assert.Equal(-1f, ret.CollisionParame.CoefB);
+            Assert.Equal(-1f, ret.CollisionParame.Dist);
+            Assert.Null(ret.CollidedSurface);
+        }
+
+        [Fact]
+        public void FindCollisionSurfaceTest_OneCollision()
+        {
+            var pos = Vector<float>.Build.DenseOfArray([0f, 0f, 1f]);
+            var vec = Vector<float>.Build.DenseOfArray([0f, 0f, -1f]);
+            var particle = new Particle(pos, vec);
+            var surfaces = new List<ISurface>
+            {
+                new SmoothSurface(
+                [
+                    Vector<float>.Build.DenseOfArray([-1f, -1f, 0f]),
+                    Vector<float>.Build.DenseOfArray([-1f, 2f, 0f]),
+                    Vector<float>.Build.DenseOfArray([2f, -1f, 0f])
+                ],
+                "collision!")
+            };
+
+            CollisionResult ret = LinearAlgebra.FindCollisionSurface(particle, surfaces);
+
+            Assert.Equal(1f, ret.CollisionParame.Dist);
+            Assert.Equal("collision!", ret.CollidedSurface?.Name);
+        }
     }
 }
