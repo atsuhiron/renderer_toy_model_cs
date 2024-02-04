@@ -30,7 +30,7 @@ namespace RendererToyModelCs.Algorithm
 
             var vecB = part.Pos - suf.Origin;
             var root = matA.Solve(vecB);
-            return new CollisionParameter(root[0], root[1], root[2]);
+            return new CollisionParameter(root[0], root[1], root[2] / (float)part.Vec.Norm(2));
         }
 
         public static bool DoCollide(CollisionParameter cParam, Tuple<float, float> basisNorm)
