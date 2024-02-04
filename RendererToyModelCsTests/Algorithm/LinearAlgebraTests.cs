@@ -158,12 +158,12 @@ namespace RendererToyModelCsTests.Algorithm
             var particle = new Particle(pos, vec);
             List<ISurface> surfaces = [];
 
-            CollisionResult ret = LinearAlgebra.FindCollisionSurface(particle, surfaces);
+            CollisionResult actual = LinearAlgebra.FindCollisionSurface(particle, surfaces);
 
-            Assert.Equal(-1f, ret.CollisionParame.CoefA);
-            Assert.Equal(-1f, ret.CollisionParame.CoefB);
-            Assert.Equal(-1f, ret.CollisionParame.Dist);
-            Assert.Null(ret.CollidedSurface);
+            Assert.Equal(-1f, actual.CollisionParame.CoefA);
+            Assert.Equal(-1f, actual.CollisionParame.CoefB);
+            Assert.Equal(-1f, actual.CollisionParame.Dist);
+            Assert.Null(actual.CollidedSurface);
         }
 
         [Fact]
@@ -183,10 +183,10 @@ namespace RendererToyModelCsTests.Algorithm
                 "collision!")
             };
 
-            CollisionResult ret = LinearAlgebra.FindCollisionSurface(particle, surfaces);
+            CollisionResult actual = LinearAlgebra.FindCollisionSurface(particle, surfaces);
 
-            Assert.Equal(1f, ret.CollisionParame.Dist);
-            Assert.Equal("collision!", ret.CollidedSurface?.Name);
+            Assert.Equal(1f, actual.CollisionParame.Dist);
+            Assert.Equal("collision!", actual.CollidedSurface?.Name);
         }
 
         [Fact]
@@ -206,12 +206,12 @@ namespace RendererToyModelCsTests.Algorithm
                 "no collision")
             };
 
-            CollisionResult ret = LinearAlgebra.FindCollisionSurface(particle, surfaces);
+            CollisionResult actual = LinearAlgebra.FindCollisionSurface(particle, surfaces);
 
-            Assert.Equal(-1f, ret.CollisionParame.CoefA);
-            Assert.Equal(-1f, ret.CollisionParame.CoefB);
-            Assert.Equal(-1f, ret.CollisionParame.Dist);
-            Assert.Null(ret.CollidedSurface);
+            Assert.Equal(-1f, actual.CollisionParame.CoefA);
+            Assert.Equal(-1f, actual.CollisionParame.CoefB);
+            Assert.Equal(-1f, actual.CollisionParame.Dist);
+            Assert.Null(actual.CollidedSurface);
         }
 
         [Fact]
@@ -245,10 +245,10 @@ namespace RendererToyModelCsTests.Algorithm
                 "no collision 2")
             };
 
-            CollisionResult ret = LinearAlgebra.FindCollisionSurface(particle, surfaces);
+            CollisionResult actual = LinearAlgebra.FindCollisionSurface(particle, surfaces);
 
-            Assert.Equal(1f, ret.CollisionParame.Dist);
-            Assert.Equal("collision!", ret.CollidedSurface?.Name);
+            Assert.Equal(1f, actual.CollisionParame.Dist);
+            Assert.Equal("collision!", actual.CollidedSurface?.Name);
         }
 
         [Fact]
@@ -282,10 +282,10 @@ namespace RendererToyModelCsTests.Algorithm
             };
             var particle = new Particle(pos, vec, lastCollidedSurfaceId: surfaces[0].Id);
 
-            CollisionResult ret = LinearAlgebra.FindCollisionSurface(particle, surfaces);
+            CollisionResult actual = LinearAlgebra.FindCollisionSurface(particle, surfaces);
 
-            Assert.Equal(2f, ret.CollisionParame.Dist);
-            Assert.Equal("collision!", ret.CollidedSurface?.Name);
+            Assert.Equal(2f, actual.CollisionParame.Dist);
+            Assert.Equal("collision!", actual.CollidedSurface?.Name);
         }
 
         [Fact]
@@ -312,10 +312,10 @@ namespace RendererToyModelCsTests.Algorithm
                 "back")
             };
 
-            CollisionResult ret = LinearAlgebra.FindCollisionSurface(particle, surfaces);
+            CollisionResult actual = LinearAlgebra.FindCollisionSurface(particle, surfaces);
 
-            Assert.Equal(1f, ret.CollisionParame.Dist);
-            Assert.Equal("collision!", ret.CollidedSurface?.Name);
+            Assert.Equal(1f, actual.CollisionParame.Dist);
+            Assert.Equal("collision!", actual.CollidedSurface?.Name);
         }
     }
 }
