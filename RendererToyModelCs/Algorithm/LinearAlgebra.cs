@@ -105,8 +105,6 @@ namespace RendererToyModelCs.Algorithm
 
             if (collisions.Count == 0)
                 return CollisionResult.CreateDefault();
-            if (collisions.Count == 1)
-                return collisions[0];
             return collisions
                 .Where(colRes => colRes.CollisionParame.Dist >= 0)
                 .MinBy(colRes => colRes.CollisionParame.Dist) ?? CollisionResult.CreateDefault();
