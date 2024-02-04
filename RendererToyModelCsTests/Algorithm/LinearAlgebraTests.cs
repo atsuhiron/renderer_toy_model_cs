@@ -188,5 +188,104 @@ namespace RendererToyModelCsTests.Algorithm
             Assert.Equal(1f, ret.CollisionParame.Dist);
             Assert.Equal("collision!", ret.CollidedSurface?.Name);
         }
+
+        [Fact]
+        public void FindCollisionSurfaceTest_NoCollision()
+        {
+            var pos = Vector<float>.Build.DenseOfArray([0f, 0f, 1f]);
+            var vec = Vector<float>.Build.DenseOfArray([0f, 0f, -1f]);
+            var particle = new Particle(pos, vec);
+            var surfaces = new List<ISurface>
+            {
+                new SmoothSurface(
+                [
+                    Vector<float>.Build.DenseOfArray([100f, 100f, 0f]),
+                    Vector<float>.Build.DenseOfArray([100f, 101f, 0f]),
+                    Vector<float>.Build.DenseOfArray([101f, -100f, 0f])
+                ],
+                "no collision")
+            };
+
+            CollisionResult ret = LinearAlgebra.FindCollisionSurface(particle, surfaces);
+
+            Assert.Equal(-1f, ret.CollisionParame.CoefA);
+            Assert.Equal(-1f, ret.CollisionParame.CoefB);
+            Assert.Equal(-1f, ret.CollisionParame.Dist);
+            Assert.Null(ret.CollidedSurface);
+        }
+
+        [Fact]
+        public void FindCollisionSurfaceTest_MultiCollision()
+        {
+            var pos = Vector<float>.Build.DenseOfArray([0f, 0f, 1f]);
+            var vec = Vector<float>.Build.DenseOfArray([0f, 0f, -1f]);
+            var particle = new Particle(pos, vec);
+            var surfaces = new List<ISurface>
+            {
+                new SmoothSurface(
+                [
+                    Vector<float>.Build.DenseOfArray([-1f, -1f, 0f]),
+                    Vector<float>.Build.DenseOfArray([-1f, 2f, 0f]),
+                    Vector<float>.Build.DenseOfArray([2f, -1f, 0f])
+                ],
+                "collision!"),
+                new SmoothSurface(
+                [
+                    Vector<float>.Build.DenseOfArray([-1f, -1f, -1f]),
+                    Vector<float>.Build.DenseOfArray([-1f, 2f, -1f]),
+                    Vector<float>.Build.DenseOfArray([2f, -1f, -1f])
+                ],
+                "no collision 1"),
+                new SmoothSurface(
+                [
+                    Vector<float>.Build.DenseOfArray([-1f, -1f, -3f]),
+                    Vector<float>.Build.DenseOfArray([-1f, 2f, -3f]),
+                    Vector<float>.Build.DenseOfArray([2f, -1f, -3f])
+                ],
+                "no collision 2")
+            };
+
+            CollisionResult ret = LinearAlgebra.FindCollisionSurface(particle, surfaces);
+
+            Assert.Equal(1f, ret.CollisionParame.Dist);
+            Assert.Equal("collision!", ret.CollidedSurface?.Name);
+        }
+
+        [Fact]
+        public void FindCollisionSurfaceTest_MultiCollisionExceptLastCollided()
+        {
+            var pos = Vector<float>.Build.DenseOfArray([0f, 0f, 1f]);
+            var vec = Vector<float>.Build.DenseOfArray([0f, 0f, -1f]);
+            var surfaces = new List<ISurface>
+            {
+                new SmoothSurface(
+                [
+                    Vector<float>.Build.DenseOfArray([-1f, -1f, 0f]),
+                    Vector<float>.Build.DenseOfArray([-1f, 2f, 0f]),
+                    Vector<float>.Build.DenseOfArray([2f, -1f, 0f])
+                ],
+                "last collided"),
+                new SmoothSurface(
+                [
+                    Vector<float>.Build.DenseOfArray([-1f, -1f, -1f]),
+                    Vector<float>.Build.DenseOfArray([-1f, 2f, -1f]),
+                    Vector<float>.Build.DenseOfArray([2f, -1f, -1f])
+                ],
+                "collision!"),
+                new SmoothSurface(
+                [
+                    Vector<float>.Build.DenseOfArray([-1f, -1f, -3f]),
+                    Vector<float>.Build.DenseOfArray([-1f, 2f, -3f]),
+                    Vector<float>.Build.DenseOfArray([2f, -1f, -3f])
+                ],
+                "no collision 1")
+            };
+            var particle = new Particle(pos, vec, lastCollidedSurfaceId: surfaces[0].Id);
+
+            CollisionResult ret = LinearAlgebra.FindCollisionSurface(particle, surfaces);
+
+            Assert.Equal(2f, ret.CollisionParame.Dist);
+            Assert.Equal("collision!", ret.CollidedSurface?.Name);
+        }
     }
 }
