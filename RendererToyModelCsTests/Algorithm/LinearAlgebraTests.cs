@@ -287,5 +287,35 @@ namespace RendererToyModelCsTests.Algorithm
             Assert.Equal(2f, ret.CollisionParame.Dist);
             Assert.Equal("collision!", ret.CollidedSurface?.Name);
         }
+
+        [Fact]
+        public void FindCollisionSurfaceTest_MultiCollisionBackSurface()
+        {
+            var pos = Vector<float>.Build.DenseOfArray([0f, 0f, 1f]);
+            var vec = Vector<float>.Build.DenseOfArray([0f, 0f, -1f]);
+            var particle = new Particle(pos, vec);
+            var surfaces = new List<ISurface>
+            {
+                new SmoothSurface(
+                [
+                    Vector<float>.Build.DenseOfArray([-1f, -1f, 0f]),
+                    Vector<float>.Build.DenseOfArray([-1f, 2f, 0f]),
+                    Vector<float>.Build.DenseOfArray([2f, -1f, 0f])
+                ],
+                "collision!"),
+                new SmoothSurface(
+                [
+                    Vector<float>.Build.DenseOfArray([-1f, -1f, 1.2f]),
+                    Vector<float>.Build.DenseOfArray([-1f, 2f, 1.2f]),
+                    Vector<float>.Build.DenseOfArray([2f, -1f, 1.2f])
+                ],
+                "back")
+            };
+
+            CollisionResult ret = LinearAlgebra.FindCollisionSurface(particle, surfaces);
+
+            Assert.Equal(1f, ret.CollisionParame.Dist);
+            Assert.Equal("collision!", ret.CollidedSurface?.Name);
+        }
     }
 }
