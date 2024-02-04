@@ -30,6 +30,10 @@ namespace RendererToyModelCs.Algorithm
 
             var vecB = part.Pos - suf.Origin;
             var root = matA.Solve(vecB);
+
+            // NOTE: Only the last term (distance) is normalized by dividing by the L2-norm of the input vector.
+            //       So far no inconsistencies have occurred,
+            //       but I am a little concerned that one unit is different from the other.
             return new CollisionParameter(root[0], root[1], root[2] / (float)part.Vec.Norm(2));
         }
 
