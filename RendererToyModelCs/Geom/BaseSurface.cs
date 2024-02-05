@@ -33,7 +33,7 @@ namespace RendererToyModelCs.Geom
 
         public Vector<float> CalcRelativeCPoint(in CollisionParameter cParam)
         {
-            return Basis.Item1.Multiply(cParam.CoefA) + Basis.Item2 * cParam.CoefB;
+            return Basis.Item1.Multiply(cParam.CoefA) + Basis.Item2.Multiply(cParam.CoefB);
         }
 
         public abstract List<IParticle> GetCollisionParticle(in IParticle inParticle, in CollisionParameter cParam, int num);
