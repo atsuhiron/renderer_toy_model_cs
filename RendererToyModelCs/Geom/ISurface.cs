@@ -1,8 +1,13 @@
-﻿using MathNet.Numerics.LinearAlgebra;
+﻿using System.Text.Json.Serialization;
+using MathNet.Numerics.LinearAlgebra;
 using RendererToyModelCs.Algorithm;
 
 namespace RendererToyModelCs.Geom
 {
+    [JsonDerivedType(typeof(ISurface), typeDiscriminator: "base")]
+    [JsonDerivedType(typeof(RoughSurface), typeDiscriminator: "rough")]
+    [JsonDerivedType(typeof(SmoothSurface), typeDiscriminator: "smooth")]
+    [JsonDerivedType(typeof(LightSurface), typeDiscriminator: "light")]
     public interface ISurface
     {
         string Name { get; init; }
