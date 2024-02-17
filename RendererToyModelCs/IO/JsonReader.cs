@@ -1,6 +1,5 @@
 ﻿using System.Text;
 using System.Text.Json;
-using RendererToyModelCs.WorldObject;
 
 namespace RendererToyModelCs.IO
 {
@@ -14,6 +13,11 @@ namespace RendererToyModelCs.IO
             var bytes = encoding_s.GetBytes(jsonStr);
             var reader = new Utf8JsonReader(new ReadOnlySpan<byte>(bytes));
             return JsonElement.ParseValue(ref reader);
+        }
+
+        public static string ReadFileStr(string filePath)
+        {
+            return File.ReadAllText(filePath, encoding_s);
         }
     }
 }
