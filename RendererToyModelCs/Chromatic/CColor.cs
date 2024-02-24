@@ -11,7 +11,7 @@ namespace RendererToyModelCs.Chromatic
 
         public bool IsDark() => Elements.Sum() <= 0;
 
-        public static CColor CreateFromColorCode(string code)
+        public static CColor CreateFromColorCode(string? code)
         {
             return new CColor(ConvertColorCode(code));
         }

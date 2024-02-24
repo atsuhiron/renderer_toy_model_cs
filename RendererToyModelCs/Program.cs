@@ -16,7 +16,8 @@ namespace RendererToyModelCs
             var fileName = "../../../samples/simple_world.json";
 
             var dict = JsonReader.ReadFile(fileName);
-            Console.WriteLine(dict?.ToString() ?? "NULL");
+            var world = Parser.Parse(dict);
+            Console.WriteLine(world?.ToString() ?? "NULL");
         }
     }
 }

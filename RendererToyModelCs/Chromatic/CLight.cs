@@ -46,7 +46,7 @@ namespace RendererToyModelCs.Chromatic
 
         public static CLight CreateDark() => new(Vector<float>.Build.Dense([1f, 1f, 1f]));
 
-        public static CLight CreateFromColorCode(string code)
+        public static CLight CreateFromColorCode(string? code)
         {
             return new CLight(1 - ConvertColorCode(code));
         }
