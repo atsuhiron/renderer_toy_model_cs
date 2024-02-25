@@ -1,5 +1,6 @@
 ﻿using MathNet.Numerics.LinearAlgebra;
 using Microsoft.CSharp.RuntimeBinder;
+using RendererToyModelCs.Geom;
 using RendererToyModelCs.IO;
 using System.Reflection;
 
@@ -82,6 +83,79 @@ namespace RendererToyModelCsTests.IO
             var expected = Vector<float>.Build.DenseOfArray([1f, 0.5f, -0.25f]);
 
             Assert.True(TestUtil.IsNearlyEqual(actual, expected));
+        }
+
+        [Fact]
+        public void ParseSurfaceTest_Rough()
+        {
+            var sufDict = new Dictionary<string, dynamic?>()
+            {
+                { "surface_type", "rough" },
+                { "point1", new List<object>() { 1f, 2f, 3f } },
+                { "point2", new List<object>() { 4f, 5f, 6f } },
+                { "point3", new List<object>() { 7f, 8f, 9f } },
+                { "color", "#FFFFFF" },
+                { "name", "from dict" }
+            };
+
+            ISurface? suf = TestUtil.InvokeStaticNonPublicMethod<ISurface>(typeof(Parser), "ParseSurface", [sufDict]);
+            Assert.NotNull(suf);
+            Assert.True(suf is RoughSurface);
+
+            RoughSurface rough = (RoughSurface) suf;
+            Assert.Equal("from dict", rough.Name);
+            Assert.True(TestUtil.IsNearlyEqual(Vector<float>.Build.DenseOfArray([1f, 1f, 1f]), rough.Color.Elements));
+            Assert.True(TestUtil.IsNearlyEqual(Vector<float>.Build.DenseOfArray([1f, 2f, 3f]), rough.Points[0]));
+            Assert.True(TestUtil.IsNearlyEqual(Vector<float>.Build.DenseOfArray([4f, 5f, 6f]), rough.Points[1]));
+            Assert.True(TestUtil.IsNearlyEqual(Vector<float>.Build.DenseOfArray([7f, 8f, 9f]), rough.Points[2]));
+        }
+
+        [Fact]
+        public void ParseSurfaceTest_Smooth()
+        {
+            var sufDict = new Dictionary<string, dynamic?>()
+            {
+                { "surface_type", "smooth" },
+                { "point1", new List<object>() { 1f, 2f, 3f } },
+                { "point2", new List<object>() { 4f, 5f, 6f } },
+                { "point3", new List<object>() { 7f, 8f, 9f } },
+                { "name", "from dict" }
+            };
+
+            ISurface? suf = TestUtil.InvokeStaticNonPublicMethod<ISurface>(typeof(Parser), "ParseSurface", [sufDict]);
+            Assert.NotNull(suf);
+            Assert.True(suf is SmoothSurface);
+
+            SmoothSurface smooth = (SmoothSurface)suf;
+            Assert.Equal("from dict", smooth.Name);
+            Assert.True(TestUtil.IsNearlyEqual(Vector<float>.Build.DenseOfArray([1f, 2f, 3f]), smooth.Points[0]));
+            Assert.True(TestUtil.IsNearlyEqual(Vector<float>.Build.DenseOfArray([4f, 5f, 6f]), smooth.Points[1]));
+            Assert.True(TestUtil.IsNearlyEqual(Vector<float>.Build.DenseOfArray([7f, 8f, 9f]), smooth.Points[2]));
+        }
+
+        [Fact]
+        public void ParseSurfaceTest_Light()
+        {
+            var sufDict = new Dictionary<string, dynamic?>()
+            {
+                { "surface_type", "light" },
+                { "point1", new List<object>() { 1f, 2f, 3f } },
+                { "point2", new List<object>() { 4f, 5f, 6f } },
+                { "point3", new List<object>() { 7f, 8f, 9f } },
+                { "light", "#FFFFFF" },
+                { "name", "from dict" }
+            };
+
+            ISurface? suf = TestUtil.InvokeStaticNonPublicMethod<ISurface>(typeof(Parser), "ParseSurface", [sufDict]);
+            Assert.NotNull(suf);
+            Assert.True(suf is LightSurface);
+
+            LightSurface light = (LightSurface)suf;
+            Assert.Equal("from dict", light.Name);
+            Assert.True(TestUtil.IsNearlyEqual(Vector<float>.Build.DenseOfArray([0f, 0f, 0f]), light.Light.Elements));
+            Assert.True(TestUtil.IsNearlyEqual(Vector<float>.Build.DenseOfArray([1f, 2f, 3f]), light.Points[0]));
+            Assert.True(TestUtil.IsNearlyEqual(Vector<float>.Build.DenseOfArray([4f, 5f, 6f]), light.Points[1]));
+            Assert.True(TestUtil.IsNearlyEqual(Vector<float>.Build.DenseOfArray([7f, 8f, 9f]), light.Points[2]));
         }
     }
 }
