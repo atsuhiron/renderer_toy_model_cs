@@ -81,7 +81,7 @@ namespace RendererToyModelCs.IO
 
         private static Vector<float> ParseVec(dynamic? point, string nameForErrorMsg="point")
         {
-            ArgumentNullException.ThrowIfNull(point, nameForErrorMsg);
+            ArgumentNullException.ThrowIfNull((object?)point, nameForErrorMsg);
 
             float[] array = ((List<object>)(point ?? new List<float>())).Select(ToFloat).ToArray();
             if (array.Length != 3) throw new ArgumentException("Length of point must be 3");
