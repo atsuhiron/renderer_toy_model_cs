@@ -40,6 +40,7 @@ namespace RendererToyModelCsTests.Geom
             Assert.Equal(-1f, actual.First().Pos[0]);
             Assert.Equal(-1f, actual.First().Pos[1]);
             Assert.Equal(1f, actual.First().Pos[2]);
+            Assert.Equal(inParticle.Id, actual.First().ParentId);
         }
     }
 }

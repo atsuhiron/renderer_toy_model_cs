@@ -44,6 +44,10 @@ namespace RendererToyModelCsTests.Geom
             Assert.NotEmpty(scatter2ndOrthant);
             Assert.NotEmpty(scatter3rdOrthant);
             Assert.NotEmpty(scatter4thOrthant);
+
+            HashSet<string> parentIdSet = actual.Select(part => part.ParentId).ToHashSet();
+            Assert.Single(parentIdSet);
+            Assert.Equal(parentIdSet.First(), inParticle.Id);
         }
     }
 }

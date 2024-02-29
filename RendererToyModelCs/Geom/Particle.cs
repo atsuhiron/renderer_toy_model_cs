@@ -37,7 +37,7 @@ namespace RendererToyModelCs.Geom
             return new Particle(
                 source.Pos, 
                 source.Vec.Normalize(2), 
-                source.ParentId,
+                source.Id,
                 source.Intensity, 
                 light, 
                 string.Empty, 
