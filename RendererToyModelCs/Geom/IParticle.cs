@@ -14,5 +14,6 @@ namespace RendererToyModelCs.Geom
         int Generation { get; init; }
         CLight? Light { get; init; }
         string? LastCollidedSurfaceId { get; init; }
+        int? PixelIndex { get; init; }
     }
 }

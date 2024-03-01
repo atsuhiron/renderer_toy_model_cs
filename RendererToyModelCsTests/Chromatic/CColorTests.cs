@@ -22,5 +22,23 @@ namespace RendererToyModelCsTests.Chromatic
             var expectedElement = Vector<float>.Build.DenseOfArray(expectedElemet);
             Assert.Equal(expectedElement, actualElement);
         }
+
+        public static IEnumerable<object[]> ToRGBCodeTestData()
+        {
+            yield return new object[] { new float[] { 0f, 0f, 0f }, 0 };
+            yield return new object[] { new float[] { 0f, 0f, 1f }, 255 };
+            yield return new object[] { new float[] { 1f, 0f, 0f }, 16711680 };
+            yield return new object[] { new float[] { 1f, 1f, 1f }, 16777215 };
+        }
+
+        [Theory]
+        [MemberData(nameof(ToRGBCodeTestData))]
+        public void ToRGBCodeTest(float[] colorElement, int expectedCode)
+        {
+            var color = new CColor(Vector<float>.Build.DenseOfArray(colorElement));
+
+            var actualCode = color.ToRGBCode();
+            Assert.Equal(expectedCode, actualCode);
+        }
     }
 }

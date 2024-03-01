@@ -37,7 +37,7 @@ namespace RendererToyModelCs.WorldObject
             Vector<float> axial = LinearAlgebra.Cross(s_foreward, Vec).Normalize(2f);
             return nonRotatedPixelVec
                 .Select(pVec => LinearAlgebra.RotateVector(pVec, axial, angle))
-                .Select(pVec => (IParticle)new Particle(Pos, pVec))
+                .Select((pVec, index) => (IParticle)new Particle(Pos, pVec, pixelIndex: index))
                 .ToList();
         }
 

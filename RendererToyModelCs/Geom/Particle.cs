@@ -14,10 +14,11 @@ namespace RendererToyModelCs.Geom
         public int Generation { get; init; }
         public CLight? Light { get; init; }
         public string? LastCollidedSurfaceId { get; init; }
+        public int? PixelIndex { get; init; }
 
         public Particle(Vector<float> pos, Vector<float> vec,
             string parentId="root", float intensity=1f, CLight? light=null, string? lastCollidedSurfaceId=null,
-            bool isTerminated=false, string? uuid=null)
+            bool isTerminated=false, string? uuid=null, int? pixelIndex=null)
         {
             Pos = pos;
             Vec = vec;
@@ -27,6 +28,7 @@ namespace RendererToyModelCs.Geom
             ParentId = parentId;
             Light = light;
             LastCollidedSurfaceId = lastCollidedSurfaceId;
+            PixelIndex = pixelIndex;
         }
 
         private static string GenUuid() => Guid.NewGuid().ToString();
