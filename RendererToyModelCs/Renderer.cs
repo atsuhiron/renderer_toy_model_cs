@@ -47,7 +47,12 @@ namespace RendererToyModelCs
 
         private List<IParticle> TraceParticles(in List<IParticle> particles, List<ISurface> surfaces)
         {
-            return particles.Select(part => TraceParticle(part, surfaces)).SelectMany(fromOnePart => fromOnePart).ToList();
+            return particles
+                .AsParallel()
+                .WithDegreeOfParallelism(10)
+                .Select(part => TraceParticle(part, surfaces))
+                .SelectMany(fromOnePart => fromOnePart)
+                .ToList();
         }
 
         private static IParticle InverseTraceChild(in List<IParticle> children, in IParticle parent, in Dictionary<string, ISurface> surfaceMap)
