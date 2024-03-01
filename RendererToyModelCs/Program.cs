@@ -1,11 +1,5 @@
-﻿using MathNet.Numerics.LinearAlgebra;
-using MathNet.Numerics.Random;
-using RendererToyModelCs.Algorithm;
-using RendererToyModelCs.Geom;
-using RendererToyModelCs.IO;
+﻿using RendererToyModelCs.IO;
 using RendererToyModelCs.WorldObject;
-using System;
-using System.Text.Json;
 
 namespace RendererToyModelCs
 {
@@ -17,7 +11,10 @@ namespace RendererToyModelCs
 
             var dict = JsonReader.ReadFile(fileName);
             var world = Parser.Parse(dict);
-            Console.WriteLine(world?.ToString() ?? "NULL");
+            var config = new RenderingConfig(2, 5);
+
+            var renderer = new Renderer(world, config);
+            var paricleList = renderer.Render();
         }
     }
 }

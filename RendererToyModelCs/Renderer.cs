@@ -50,7 +50,7 @@ namespace RendererToyModelCs
             return particles.Select(part => TraceParticle(part, surfaces)).SelectMany(fromOnePart => fromOnePart).ToList();
         }
 
-        private IParticle InverseTraceChild(in List<IParticle> children, in IParticle parent, in Dictionary<string, ISurface> surfaceMap)
+        private static IParticle InverseTraceChild(in List<IParticle> children, in IParticle parent, in Dictionary<string, ISurface> surfaceMap)
         {
             List<CLight> lights = children.Select(c => c.Light ?? CLight.CreateDark()).ToList();
             List<float> itst = children.Select(c => c.Intensity).ToList();
@@ -73,7 +73,7 @@ namespace RendererToyModelCs
             return Particle.CreateInverseTraceParticle(parent, newLight, intensity);
         }
 
-        private List<IParticle> InverseTrace(List<IParticle> children, List<IParticle> parent, Dictionary<string, ISurface> surfaceMap)
+        private static List<IParticle> InverseTrace(List<IParticle> children, List<IParticle> parent, Dictionary<string, ISurface> surfaceMap)
         {
             IEnumerable<string> parentIds = parent.Select(p => p.Id);
             Dictionary<string, List<IParticle>> familyTree = parentIds.ToDictionary(pId => pId, pId => new List<IParticle>());
@@ -84,12 +84,10 @@ namespace RendererToyModelCs
             return parentIds.Select((string pId, int index) =>
             {
                 var family = familyTree[pId];
-                IParticle itp;
                 if (family.Count == 0)
-                    itp = parent[index];
+                    return parent[index];
                 else
-                    itp = InverseTraceChild(children, parent[index], surfaceMap);
-                return itp;
+                    return InverseTraceChild(children, parent[index], surfaceMap);
             }).ToList();
         }
     }

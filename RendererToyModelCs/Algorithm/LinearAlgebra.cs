@@ -5,7 +5,7 @@ namespace RendererToyModelCs.Algorithm
 {
     public static class LinearAlgebra
     {
-        public static Vector<float> Cross(Vector<float> left, Vector<float> right)
+        public static Vector<float> Cross(in Vector<float> left, in Vector<float> right)
         {
             var x = left[1] * right[2] - left[2] * right[1];
             var y = -left[0] * right[2] + left[2] * right[0];
@@ -37,7 +37,7 @@ namespace RendererToyModelCs.Algorithm
             return new CollisionParameter(root[0], root[1], root[2] / (float)part.Vec.Norm(2));
         }
 
-        public static bool DoCollide(CollisionParameter cParam, Tuple<float, float> basisNorm)
+        public static bool DoCollide(in CollisionParameter cParam, in Tuple<float, float> basisNorm)
         {
             if (cParam.CoefA < 0 || cParam.CoefB < 0)
             {
@@ -47,7 +47,7 @@ namespace RendererToyModelCs.Algorithm
             float a = cParam.CoefA / basisNorm.Item1;
             float b = cParam.CoefB / basisNorm.Item2;
             
-            if ((a + b) > 0.5)
+            if ((a + b) > 0.5f)
             {
                 return false;
             }
