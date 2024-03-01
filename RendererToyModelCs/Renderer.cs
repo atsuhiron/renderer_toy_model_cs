@@ -87,7 +87,7 @@ namespace RendererToyModelCs
                 if (family.Count == 0)
                     return parent[index];
                 else
-                    return InverseTraceChild(children, parent[index], surfaceMap);
+                    return InverseTraceChild(family, parent[index], surfaceMap);
             }).ToList();
         }
     }
