@@ -22,5 +22,13 @@ namespace RendererToyModelCs.Chromatic
 
             return Vector<float>.Build.DenseOfArray([intR / 255f, intG / 255f, intB / 255f]);
         }
+
+        public override string ToString()
+        {
+            IEnumerable<string> codeString = Elements
+                .Select(e => (int)(e * 255))
+                .Select(e => Convert.ToString(e, 16));
+            return "#" + string.Join(string.Empty, codeString);
+        }
     }
 }
