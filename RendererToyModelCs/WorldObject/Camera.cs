@@ -53,9 +53,8 @@ namespace RendererToyModelCs.WorldObject
             {
                 for (int hi = 0; hi < PixelH; hi++)
                 {
-                    // It can use FMA
-                    var phi = dPhi * hi - halfPhi;
-                    var theta = dTheta * vi - halfTheta;
+                    var phi = MathF.FusedMultiplyAdd(dPhi, hi, -halfPhi);
+                    var theta = MathF.FusedMultiplyAdd(dTheta, vi, -halfTheta);
                     var vec = Vector<float>.Build.Dense([MathF.Sin(phi), 1f, MathF.Sin(theta)]);
                     pixelVec.Add(vec.Multiply(Focal));
                 }
@@ -75,9 +74,8 @@ namespace RendererToyModelCs.WorldObject
             {
                 for (int hi = 0; hi < PixelH; hi++)
                 {
-                    // It can use FMA
-                    var x = dh * hi - halfH;
-                    var z = dv * vi - halfV;
+                    var x = MathF.FusedMultiplyAdd(dh, hi, -halfH);
+                    var z = MathF.FusedMultiplyAdd(dv, vi, -halfV);
                     pixelVec.Add(Vector<float>.Build.Dense([x, Focal, z]));
                 }
             }
